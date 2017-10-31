@@ -1,0 +1,94 @@
+{
+  "name": "truffle-live-browserify",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "browserify main.js -o index.js & browserify server.js -o server.dist.js",
+    "dev": "npm run watch & npm run watch-service-worker & http-serve -o",
+    "watch": "watchify -p [ browserify-livereload --host 127.0.0.1 --port 1337 ] main.js -o index.js",
+    "watch-service-worker": "watchify server.js -o server.dist.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "aliasify": "^2.1.0",
+    "babelify": "^7.3.0",
+    "bluebird": "^3.5.1",
+    "browserify": "^14.4.0",
+    "browserify-fs": "^1.0.0",
+    "browserify-livereload": "^1.0.10",
+    "ganache-core": "^1.1.4",
+    "http-serve": "^1.0.1",
+    "memfs": "^2.5.7",
+    "module": "^1.2.5",
+    "proxyquireify": "^3.2.1",
+    "read-stream": "^2.1.1",
+    "resolver": "^0.1.12",
+    "setimmediate": "^1.0.5",
+    "solc": "^0.4.17",
+    "truffle": "^3.4.11",
+    "truffle-artifactor": "^3.0.0",
+    "truffle-compile": "^3.0.1",
+    "truffle-core": "^3.4.11",
+    "web3": "^0.20.2",
+    "webworkify": "^1.4.0",
+    "workerify": "^1.0.0",
+    "write-stream": "^0.4.3",
+    "ws-browserify-fs": "^1.0.1",
+    "yo-yoify": "^4.0.0"
+  },
+  "browserify-swap": {
+    "@packages": [
+      "browserify-fs"
+    ],
+    "all": {
+      "fs": "browserify-fs"
+    }
+  },
+  "browserify": {
+    "transform": [
+      [
+        "babelify",
+        {
+          "sourceMapsAbsolute": false,
+          "sourceMaps": true,
+          "plugins": [
+            [
+              "fast-async",
+              {
+                "runtimePattern": null,
+                "compiler": {
+                  "es7": true,
+                  "noRuntime": true,
+                  "promises": true,
+                  "wrapAwait": true
+                }
+              }
+            ],
+            [
+              "transform-object-assign"
+            ]
+          ],
+          "presets": [
+            "es2015"
+          ]
+        },
+        "browserify-swap"
+      ]
+    ]
+  },
+  "dependencies": {
+    "babel-plugin-transform-object-assign": "^6.22.0",
+    "babel-preset-es2015": "^6.24.1",
+    "browserify-reload": "^1.1.1",
+    "fast-async": "^6.3.0",
+    "node-dir": "^0.1.17",
+    "react": "^16.0.0",
+    "truffle-config": "^1.0.2",
+    "truffle-migrate": "^2.0.0",
+    "watchify": "^3.9.0",
+    "watchify-server": "^1.0.2"
+  }
+}
